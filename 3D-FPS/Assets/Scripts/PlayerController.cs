@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
         move = transform.TransformDirection(move);  // 현재 gameObject의 방향으로 벡터를 돌림
         characterController.Move(move);             // character controller componenet 움직여
 
+        // 마우스 좌우 
         Vector2 look = lookAction.ReadValue<Vector2>();     // look액션 벡터를 가져옴
 
         float turnPlayer = look.x * mouseSens;              // 마우스 감도 적용
@@ -62,7 +63,9 @@ public class PlayerController : MonoBehaviour
 
         // 마우스 상하 
         float turnCam = look.y * mouseSens;
-        verticalAngle -= turnCam;
+        // 마우스를 올리면 양수값이 들어와야 하는데
+        // 게임에서 마우스를 올려서 위를 올려보려면 음수값을 넣어줘야 한다.? 
+        verticalAngle -= turnCam;           
         verticalAngle = Mathf.Clamp(verticalAngle, -89f,89f);
         currentAngle = CameraTransform.localEulerAngles;
         currentAngle.x = verticalAngle;
