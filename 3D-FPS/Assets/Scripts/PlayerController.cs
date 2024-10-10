@@ -5,10 +5,18 @@ public class PlayerController : MonoBehaviour
 {
     public float walkingSpeed = 7;
     public float mouseSens = 0.01f;
+    public float jumpSpeed = 6;
     public Transform CameraTransform;
 
+    float gravity = 9.81f;         // 중력 가속도
+    float terminalSpeed = 20;      // 종단 속도(낙하시, 일정 속도 이상으로 빨라지지 않게 하기 위해서 만든 장치)
+    
+    float verticalSpeed;
     float horizontalAngle;
     float verticalAngle;
+
+    bool isGrounded;
+    float groundedTimer;
 
     InputAction moveAction;
     InputAction lookAction;
@@ -31,6 +39,8 @@ public class PlayerController : MonoBehaviour
         verticalAngle = 0;
         horizontalAngle = transform.localEulerAngles.y;
 
+        isGrounded = true;
+        groundedTimer = 0;
     }
 
     // Update is called once per frame
@@ -70,5 +80,51 @@ public class PlayerController : MonoBehaviour
         currentAngle = CameraTransform.localEulerAngles;
         currentAngle.x = verticalAngle;
         CameraTransform.localEulerAngles = currentAngle;
+
+        // 중력
+
+        verticalSpeed -= gravity * Time.deltaTime;  // 속도 = 가속도 * 시간
+        if (verticalSpeed < -terminalSpeed)         // -terminalSpeed보다 떨어지는 속도가 낮은 값을 가지고 있으면
+        {
+            verticalSpeed = -terminalSpeed;         // 떨어지는 속도를 -terminalSpeed로 고정
+        }
+        Vector3 verticalMove = new Vector3(0, verticalSpeed, 0);      // 하강하는 Vector에 delta.Time적용
+        verticalMove *= Time.deltaTime;                               
+
+        CollisionFlags flag = characterController.Move(verticalMove); // 캐릭터가 어디에 부딪혔는지 확인하는 부분
+
+        //캐릭터가 바닥에 닿으면(CollisionFlags.Below), verticalSpeed를 0으로 하여 낙하를 멈춥니다.
+        if ((flag & (CollisionFlags.Below | CollisionFlags.Above)) != 0)                       
+        {
+            verticalSpeed = 0;
+        }        
+
+        if(!characterController.isGrounded) // 땅에서 떨어져있고,
+        {
+            if(isGrounded)                  // 전에 땅에 붙어있었다면
+            {
+                groundedTimer += Time.deltaTime;
+                if(groundedTimer>0.3f)      // 떨어져있는 시간이 0.5초 넘어가면
+                {
+                    isGrounded = false;     // 떨어져있음
+                }
+            }
+        }
+        else                                // 땅에 붙어있으면
+        {
+            isGrounded = true;              // 땅에 붙어있음
+            groundedTimer = 0;
+        }
+        //Debug.Log(isGrounded);
+    }
+
+    void OnJump()
+    {
+        if(isGrounded)
+        {
+            verticalSpeed = jumpSpeed;
+            isGrounded = false;     // 이때 true를 하게되면 0.3초 내에 점프를 하면 다단 점프 가능
+        }
+        //Debug.Log("OnJump Active");
     }
 }
