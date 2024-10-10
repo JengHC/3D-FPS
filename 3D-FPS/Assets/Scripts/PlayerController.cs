@@ -6,7 +6,9 @@ public class PlayerController : MonoBehaviour
     public float walkingSpeed = 7;
     public float mouseSens = 0.01f;
     public float jumpSpeed = 6;
+
     public Transform CameraTransform;
+    public Weapon weapon;
 
     float gravity = 9.81f;         // 중력 가속도
     float terminalSpeed = 20;      // 종단 속도(낙하시, 일정 속도 이상으로 빨라지지 않게 하기 위해서 만든 장치)
@@ -20,6 +22,8 @@ public class PlayerController : MonoBehaviour
 
     InputAction moveAction;
     InputAction lookAction;
+    InputAction attackAction;
+
 
     CharacterController characterController;
 
@@ -33,6 +37,7 @@ public class PlayerController : MonoBehaviour
 
         moveAction = inputActions.FindAction("Move");                        // move를 사용
         lookAction = inputActions.FindAction("Look");
+        attackAction = inputActions.FindAction("Attack");
 
         characterController = GetComponent<CharacterController>();
 
@@ -97,14 +102,14 @@ public class PlayerController : MonoBehaviour
         if ((flag & (CollisionFlags.Below | CollisionFlags.Above)) != 0)                       
         {
             verticalSpeed = 0;
-        }        
+        }
 
-        if(!characterController.isGrounded) // 땅에서 떨어져있고,
+        if (!characterController.isGrounded) // 땅에서 떨어져있고,
         {
-            if(isGrounded)                  // 전에 땅에 붙어있었다면
+            if (isGrounded)                  // 전에 땅에 붙어있었다면
             {
                 groundedTimer += Time.deltaTime;
-                if(groundedTimer>0.3f)      // 떨어져있는 시간이 0.5초 넘어가면
+                if (groundedTimer > 0.3f)      // 떨어져있는 시간이 0.5초 넘어가면
                 {
                     isGrounded = false;     // 떨어져있음
                 }
@@ -115,7 +120,13 @@ public class PlayerController : MonoBehaviour
             isGrounded = true;              // 땅에 붙어있음
             groundedTimer = 0;
         }
-        //Debug.Log(isGrounded);
+
+        // 총 발사
+        // 이번 프레임에 눌렸나요?
+        if(attackAction.WasPressedThisFrame())
+        {
+            weapon.FireWeapon();          
+        }
     }
 
     void OnJump()
@@ -127,4 +138,6 @@ public class PlayerController : MonoBehaviour
         }
         //Debug.Log("OnJump Active");
     }
+
+    
 }
