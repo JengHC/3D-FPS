@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     InputAction moveAction;
     InputAction lookAction;
     InputAction attackAction;
+    InputAction reloadAction;
 
 
     CharacterController characterController;
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
         moveAction = inputActions.FindAction("Move");                        // move를 사용
         lookAction = inputActions.FindAction("Look");
         attackAction = inputActions.FindAction("Attack");
+        reloadAction = inputActions.FindAction("Reload");
 
         characterController = GetComponent<CharacterController>();
 
@@ -121,11 +123,15 @@ public class PlayerController : MonoBehaviour
             groundedTimer = 0;
         }
 
-        // 총 발사
+        // 총 발사 및 장전
         // 이번 프레임에 눌렸나요?
         if(attackAction.WasPressedThisFrame())
         {
             weapon.FireWeapon();          
+        }
+        if(reloadAction.WasPerformedThisFrame())
+        {
+            weapon.ReloadWeapon();
         }
     }
 
