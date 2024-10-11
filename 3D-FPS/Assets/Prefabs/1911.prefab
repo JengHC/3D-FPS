@@ -173,3 +173,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b018e39dd27e1049b0d8379aab246f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trailPrefab: {fileID: 0}
+  firingPosition: {fileID: 0}
+  particlePrefab: {fileID: 0}

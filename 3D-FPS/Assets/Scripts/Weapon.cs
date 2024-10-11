@@ -5,6 +5,7 @@ public class Weapon : MonoBehaviour
 {
     public GameObject trailPrefab;      // 총알궤적
     public Transform firingPosition;    // 발사 위치, 총알 시작 점
+    public GameObject particlePrefab;   // 총 맞은 곳 파티클 시스템
 
     Animator animator;
 
@@ -52,6 +53,11 @@ public class Weapon : MonoBehaviour
         if (Physics.Raycast(r,out hit,1000))     
         {
             hitPosition = hit.point;            // 충돌하면, 부딪힌 좌표값 
+
+            GameObject particle = Instantiate(particlePrefab);
+            particle.transform.position = hitPosition;
+            particle.transform.forward = hit.normal;  // 
+
         }
 
         GameObject go = Instantiate(trailPrefab);   // trailPrefab오브젝트 생성
@@ -60,14 +66,17 @@ public class Weapon : MonoBehaviour
         // 프리팹 좌표 지정
         go.GetComponent<LineRenderer>().SetPositions(pos);
 
-        StartCoroutine(DestroyTrail(go));
+        Destroy(go, 0.1f);
+
+    //   StartCoroutine(DestroyTrail(go));
         
     }
-    IEnumerator DestroyTrail(GameObject obj)
-    {
-        yield return new WaitForSeconds(0.1f); // 0.5초간, 잠시 실행을 양보하면서
+    // 코루틴으로 사용해도 되지만, Destroy자체로도 가능하다.
+    //IEnumerator DestroyTrail(GameObject obj)
+    //{
+    //    yield return new WaitForSeconds(0.1f); // 0.5초간, 잠시 실행을 양보하면서
 
-        Destroy(obj);   // Trail 오브젝트가 파괴된다.
-    }
+    //    Destroy(obj);   // Trail 오브젝트가 파괴된다.
+    //}
 
 }
