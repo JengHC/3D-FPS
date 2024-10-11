@@ -23,13 +23,25 @@ public class Weapon : MonoBehaviour
 
     public void FireWeapon()
     {
-        // 현재 상태가 무엇인지 확인
-        // Idle 상태에서만 작동
-        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        if (animator != null)
         {
-            animator.SetTrigger("Fire");
-            RayCastFire();
-        }  
+            // 현재 상태가 무엇인지 확인
+            // Idle 상태에서만 작동
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) // 상태가 idle이면
+            {
+                animator.SetTrigger("Fire");
+                Fire(); // 메소드 호출
+            }
+        }
+        else
+        {
+            Fire();
+        }
+    }
+
+    protected virtual void Fire()
+    {
+        RayCastFire();
     }
 
     public void ReloadWeapon()

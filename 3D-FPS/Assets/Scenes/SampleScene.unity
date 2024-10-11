@@ -303,23 +303,12 @@ MonoBehaviour:
   mouseSens: 0.2
   jumpSpeed: 6
   CameraTransform: {fileID: 1107206756}
-  weapon: {fileID: 113701559}
+  weapon: {fileID: 700656804}
 --- !u!4 &113701557 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3853608870415917329, guid: 0be31a0c68e8954499889e09658bfac9, type: 3}
   m_PrefabInstance: {fileID: 7275950628066567778}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &113701559 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5654484643180182157, guid: 0be31a0c68e8954499889e09658bfac9, type: 3}
-  m_PrefabInstance: {fileID: 7275950628066567778}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b018e39dd27e1049b0d8379aab246f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &178871887
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -644,6 +633,11 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -2267060264295078251, guid: 3c2812a763773774fb5b5a5767178b55, type: 3}
+--- !u!1 &340077319 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 96f59debe1287a74a91fcf9cae75235e, type: 3}
+  m_PrefabInstance: {fileID: 700656802}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &425449085
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1367,18 +1361,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 96f59debe1287a74a91fcf9cae75235e, type: 3}
       propertyPath: m_Name
-      value: MK2
+      value: Grenadelauncher
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 96f59debe1287a74a91fcf9cae75235e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1655380787}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 96f59debe1287a74a91fcf9cae75235e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 700656804}
   m_SourcePrefab: {fileID: 100100000, guid: 96f59debe1287a74a91fcf9cae75235e, type: 3}
 --- !u!4 &700656803 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 96f59debe1287a74a91fcf9cae75235e, type: 3}
   m_PrefabInstance: {fileID: 700656802}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &700656804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340077319}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2874c7a53084b040a5380ccf71715f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trailPrefab: {fileID: 0}
+  firingPosition: {fileID: 1655380787}
+  particlePrefab: {fileID: 0}
+  projectilePrefab: {fileID: 7602721539466262721, guid: 43d017fbd8a1cf44687077cce584cc10, type: 3}
+  projectileAngle: 30
+  projectileForce: 10
+  projectileTime: 5
 --- !u!1001 &725645953
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2387,6 +2406,37 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -2267060264295078251, guid: 3c2812a763773774fb5b5a5767178b55, type: 3}
+--- !u!1 &1655380786
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1655380787}
+  m_Layer: 0
+  m_Name: FiringPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1655380787
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1655380786}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 700656803}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1696625237
 GameObject:
   m_ObjectHideFlags: 0
@@ -3185,6 +3235,10 @@ PrefabInstance:
     - target: {fileID: 4481385597673356203, guid: 0be31a0c68e8954499889e09658bfac9, type: 3}
       propertyPath: m_Name
       value: 1911
+      objectReference: {fileID: 0}
+    - target: {fileID: 4481385597673356203, guid: 0be31a0c68e8954499889e09658bfac9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5654484643180182157, guid: 0be31a0c68e8954499889e09658bfac9, type: 3}
       propertyPath: trailPrefab
