@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -57,6 +58,16 @@ public class Weapon : MonoBehaviour
         Vector3[] pos = new Vector3[] { firingPosition.position, hitPosition }; // 점 위치 저장
         // Positions에 배열을 넣으면 그걸 이어서 직선을그림
         // 프리팹 좌표 지정
-        go.GetComponent<LineRenderer>().SetPositions(pos);  
+        go.GetComponent<LineRenderer>().SetPositions(pos);
+
+        StartCoroutine(DestroyTrail(go));
+        
     }
+    IEnumerator DestroyTrail(GameObject obj)
+    {
+        yield return new WaitForSeconds(0.1f); // 0.5초간, 잠시 실행을 양보하면서
+
+        Destroy(obj);   // Trail 오브젝트가 파괴된다.
+    }
+
 }
