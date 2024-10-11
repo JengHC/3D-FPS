@@ -18,8 +18,8 @@ public class ProjectileWeapon :Weapon // Weapon클래스 상속받음
     {
         Camera cam = Camera.main;
         Vector3 forward = cam.transform.forward;
+        
         Vector3 up = cam.transform.up;
-
         Vector3 direction = forward + up * Mathf.Tan(projectileAngle * Mathf.Deg2Rad);
 
         direction.Normalize();  // 길이를 1로 맞춰주기 위해 정규화
