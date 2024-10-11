@@ -8,10 +8,10 @@ public class Weapon : MonoBehaviour
     public Transform firingPosition;    // 발사 위치, 총알 시작 점
     public GameObject particlePrefab;   // 총 맞은 곳 파티클 시스템
 
-    public int currentBullet = 8;
-    public int totalBullet = 32;
-    public int maxbulletInMagazine = 8;
-    public TMP_Text bulletText;
+    public int currentBullet = 8;       // 현재 가지고 있는 탄환
+    public int totalBullet = 32;        // 전체 탄환
+    public int maxBulletInMagazine = 8; // 한 탄창당 탄약 수
+    public TMP_Text bulletText;         
 
     Animator animator;
 
@@ -29,20 +29,26 @@ public class Weapon : MonoBehaviour
 
     public void FireWeapon()
     {
-        if (animator != null)
+        if(currentBullet>0)
         {
-            // 현재 상태가 무엇인지 확인
-            // Idle 상태에서만 작동
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) // 상태가 idle이면
+            if (animator != null)
             {
-                animator.SetTrigger("Fire");
-                Fire(); // 메소드 호출
+                // 현재 상태가 무엇인지 확인
+                // Idle 상태에서만 작동
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")) // 상태가 idle이면
+                {
+                    currentBullet--;
+                    animator.SetTrigger("Fire");
+                    Fire(); // 메소드 호출
+                }
+            }
+            else
+            {
+                currentBullet--;
+                Fire();
             }
         }
-        else
-        {
-            Fire();
-        }
+        
     }
 
     protected virtual void Fire()
@@ -52,11 +58,42 @@ public class Weapon : MonoBehaviour
 
     public void ReloadWeapon()
     {
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        if(currentBullet== maxBulletInMagazine)
         {
-            animator.SetTrigger("Reload");
+            return;
+        }
+
+        if(totalBullet>0)
+        {
+            if (animator != null)
+            {
+                if (animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+                {
+                    animator.SetTrigger("Reload");
+                    Reload();
+                }
+            }
+            else
+            {
+                Reload();
+            }
         }
     }
+
+    void Reload()
+    {
+        if(totalBullet >= maxBulletInMagazine-currentBullet)
+        {
+            totalBullet -= maxBulletInMagazine - currentBullet;
+            currentBullet = maxBulletInMagazine;
+        }
+        else
+        {
+            currentBullet += totalBullet;
+            totalBullet = 0;
+        }
+    }
+
     void RayCastFire()
     {
         Camera cam = Camera.main;
