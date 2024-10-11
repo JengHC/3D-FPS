@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class Weapon : MonoBehaviour
@@ -6,6 +7,11 @@ public class Weapon : MonoBehaviour
     public GameObject trailPrefab;      // 총알궤적
     public Transform firingPosition;    // 발사 위치, 총알 시작 점
     public GameObject particlePrefab;   // 총 맞은 곳 파티클 시스템
+
+    public int currentBullet = 8;
+    public int totalBullet = 32;
+    public int maxbulletInMagazine = 8;
+    public TMP_Text bulletText;
 
     Animator animator;
 
@@ -18,7 +24,7 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        bulletText.text = currentBullet + "/" + totalBullet;
     }
 
     public void FireWeapon()
