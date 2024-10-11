@@ -10,9 +10,9 @@ public class Bomb : MonoBehaviour
         if (time < 0)
         {
             GetComponent<Animator>().SetTrigger("Explode");
+            // 애니메이션 길이가 2초면 2초뒤 폭발, 1초면 1초뒤 폭발
             Destroy(gameObject, 2);
 
         }
     }
-
 }

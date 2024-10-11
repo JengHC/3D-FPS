@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +10,9 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeed = 6;
 
     public Transform CameraTransform;
-    public Weapon weapon;
+
+    public List<Weapon> weapons;    // 무기를 리스트화 해서 여러개 무기를 가짐
+    int currentWeaponIndex;
 
     float gravity = 9.81f;         // 중력 가속도
     float terminalSpeed = 20;      // 종단 속도(낙하시, 일정 속도 이상으로 빨라지지 않게 하기 위해서 만든 장치)
@@ -127,13 +131,27 @@ public class PlayerController : MonoBehaviour
         // 이번 프레임에 눌렸나요?
         if(attackAction.WasPressedThisFrame())
         {
-            weapon.FireWeapon();          
+            weapons[currentWeaponIndex].FireWeapon();          
         }
         if(reloadAction.WasPerformedThisFrame())
         {
-            weapon.ReloadWeapon();
+            weapons[currentWeaponIndex].ReloadWeapon();
         }
     }
+
+    public void OnChangeWeapon()
+    {
+        weapons[currentWeaponIndex].gameObject.SetActive(false); // 현재 무기 비활성화
+
+        currentWeaponIndex++; // 선택 무기 인덱스 증가
+        if (currentWeaponIndex > weapons.Count - 1) // 리스트의 인덱스를 넘겼을 때
+        {
+            currentWeaponIndex = 0; // 인덱스 초기화
+        }
+
+        weapons[currentWeaponIndex].gameObject.SetActive(true); // 다음 무기 활성화
+    }
+
 
     void OnJump()
     {
