@@ -17,10 +17,15 @@ public class ProjectileWeapon :Weapon // Weapon클래스 상속받음
     void ProjectileFire()
     {
         Camera cam = Camera.main;
-        Vector3 forward = cam.transform.forward;
-        
-        Vector3 up = cam.transform.up;
-        Vector3 direction = forward + up * Mathf.Tan(projectileAngle * Mathf.Deg2Rad);
+        Vector3 forward = cam.transform.forward;   
+
+        // 수류탄 투척 방법 1
+        //Vector3 up = cam.transform.up;    //카메라의 y축 벡터
+        //주시 방향 + (라디안으로 치환한 발사각의 탄젠트값 * y축 벡터)
+        //Vector3 direction = forward + up * Mathf.Tan(projectileAngle * Mathf.Deg2Rad);
+
+        //수류탄 투척 방법 2
+        Vector3 direction = Quaternion.AngleAxis(-projectileAngle, cam.transform.right) * forward;
 
         direction.Normalize();  // 길이를 1로 맞춰주기 위해 정규화
         direction *= projectileForce;
@@ -32,5 +37,4 @@ public class ProjectileWeapon :Weapon // Weapon클래스 상속받음
         go.GetComponent<Bomb>().time = projectileTime;
        
     }
-
 }
