@@ -57,6 +57,10 @@ public class PlayerController : MonoBehaviour, Health.IHealthListener
     // Update is called once per frame
     void Update()
     {
+        if(!GameManager.Instance.isPlaying)
+        {
+            return ;
+        }
         // Move 평행이동
         Vector2 moveVector = moveAction.ReadValue<Vector2>();
         Vector3 move = new Vector3(moveVector.x, 0, moveVector.y);
@@ -165,6 +169,8 @@ public class PlayerController : MonoBehaviour, Health.IHealthListener
 
     public void OnDie()
     {
-       // throw new System.NotImplementedException();
+        // throw new System.NotImplementedException();
+        GetComponent<Animator>().SetTrigger("Die");
+        GameManager.Instance.PlayerDie();
     }
 }

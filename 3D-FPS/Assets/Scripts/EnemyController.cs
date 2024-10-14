@@ -122,7 +122,7 @@ public class EnemyController : MonoBehaviour, Health.IHealthListener
     {
         if(other.tag == "Player")
         {
-            other.GetComponent<Health>().Damage(1);
+            other.GetComponent<Health>().Damage(10);
         }
     }
 }
