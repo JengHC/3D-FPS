@@ -37,7 +37,7 @@ public class EnemyController : MonoBehaviour, Health.IHealthListener
         agent.destination = player.transform.position;
 
         state = State.Idle;
-        currentStateTime = timeForNextState;
+        currentStateTime = timeForNextState = 2;
     }
 
     // Update is called once per frame
@@ -107,7 +107,7 @@ public class EnemyController : MonoBehaviour, Health.IHealthListener
     public void OnDie()
     {
         //throw new System.NotImplementedException();
-        Debug.Log("Real DIe");
+        Debug.Log("Real Die");
         agent.isStopped = true;
         animator.SetTrigger("Die");
         Invoke("OnDestroy", 2);
@@ -115,6 +115,7 @@ public class EnemyController : MonoBehaviour, Health.IHealthListener
 
     void OnDestroy()
     {
+        GameManager.Instance.EnemyDie();
         Destroy(gameObject);
     }
 

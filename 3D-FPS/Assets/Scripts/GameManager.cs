@@ -1,3 +1,5 @@
+using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,17 +18,35 @@ public class GameManager : MonoBehaviour
 
     public bool isPlaying;
     public GameObject GameOverCanvas;
+    public int enemyNumber;
+    public TMP_Text title;
 
-    private void Start()
+    void Start()
     {
         isPlaying = true;
     }
     public void PlayerDie()
     {
+        title.text = "You Died";
+        GameEnd();
+    }
+
+    public void GameEnd()
+    {
         isPlaying = false;
         Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.None;
         GameOverCanvas.SetActive(true);
+    }
+
+    public void EnemyDie()
+    {
+        enemyNumber--;
+        if(enemyNumber<=0)
+        {
+            title.text = "You win";
+            GameEnd();
+        }
     }
 
     public void AgainPressed()
