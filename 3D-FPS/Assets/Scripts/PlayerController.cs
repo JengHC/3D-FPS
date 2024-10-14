@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, Health.IHealthListener
 {
     public float walkingSpeed = 7;
     public float mouseSens = 0.01f;
@@ -163,5 +163,8 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("OnJump Active");
     }
 
-    
+    public void OnDie()
+    {
+       // throw new System.NotImplementedException();
+    }
 }

@@ -11,8 +11,9 @@ public class Weapon : MonoBehaviour
     public int currentBullet = 8;       // 현재 가지고 있는 탄환
     public int totalBullet = 32;        // 전체 탄환
     public int maxBulletInMagazine = 8; // 한 탄창당 탄약 수
-    public TMP_Text bulletText;         
+    public TMP_Text bulletText;
 
+    public float damage;
     Animator animator;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -107,11 +108,16 @@ public class Weapon : MonoBehaviour
         // 어딘가 빛이 부딪히면 true, 아니면 false, 충돌정보를 hit에 저장
         if (Physics.Raycast(r,out hit,1000))     
         {
-            hitPosition = hit.point;            // 충돌하면, 부딪힌 좌표값 
+            hitPosition = hit.point;            // 빛 충돌하면, 부딪힌 좌표값 
 
             GameObject particle = Instantiate(particlePrefab);
             particle.transform.position = hitPosition;
-            particle.transform.forward = hit.normal;  // 
+            particle.transform.forward = hit.normal;  
+
+            if(hit.collider.tag == "Enemy")     // hit collider가 부딫힌 태그가 Enemy라면, Health컴포턴트를 받아와 Damage를 준다
+            {
+                hit.collider.GetComponent<Health>().Damage(damage);
+            }
 
         }
 
