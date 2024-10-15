@@ -4,6 +4,7 @@ public class Bomb : MonoBehaviour
 {
     public float time;
     public float damage;
+    public AudioClip explodeSound;
 
     private void Update()
     {
@@ -15,6 +16,10 @@ public class Bomb : MonoBehaviour
             Destroy(gameObject, 2);
 
         }
+    }
+    public void PlaySound()
+    {
+        GetComponent<AudioSource>().PlayOneShot(explodeSound);
     }
 
     private void OnTriggerEnter(Collider other)

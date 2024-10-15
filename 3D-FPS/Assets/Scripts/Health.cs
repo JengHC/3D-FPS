@@ -9,6 +9,9 @@ public class Health : MonoBehaviour
 
     public Image hpGauge;
 
+    public AudioClip dieSound;
+    public AudioClip hurtSound;
+
     IHealthListener healthListener;
     float lastDamageTime;
 
@@ -33,14 +36,21 @@ public class Health : MonoBehaviour
 
             if (hp <= 0)
             {
-                if(healthListener != null)
+                if (dieSound != null)
+                {
+                    GetComponent<AudioSource>().PlayOneShot(dieSound);
+                }
+                if (healthListener != null)
                 {
                     healthListener.OnDie();
                 }
             }
             else
             {
-                Debug.Log("´ÙÄ§");
+                if (hurtSound != null)
+                {
+                    GetComponent<AudioSource>().PlayOneShot(hurtSound);
+                }
             }
         }
     }
