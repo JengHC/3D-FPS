@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     {
         isPlaying = false;
         Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState = CursorLockMode.Confined;
         GameOverCanvas.SetActive(true);
     }
 

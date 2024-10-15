@@ -18,6 +18,7 @@ public class EnemyController : MonoBehaviour, Health.IHealthListener
     GameObject player;
     NavMeshAgent agent;
     Animator animator;
+    new AudioSource audio;  
     public float walkSpeed = 3;
 
     State state;    // 적의 현재 상태
@@ -27,9 +28,11 @@ public class EnemyController : MonoBehaviour, Health.IHealthListener
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+
         animator = GetComponent<Animator>();
         player = GameObject.FindWithTag("Player");
         agent = GetComponent<NavMeshAgent>();
+        audio = GetComponent<AudioSource>();
 
         // 적의 기본 이동 속도를 설정
         agent.speed = walkSpeed;
@@ -81,6 +84,7 @@ public class EnemyController : MonoBehaviour, Health.IHealthListener
     }
     void StartIdle()
     {
+        audio.Stop();
         state = State.Idle;
         currentStateTime = timeForNextState;
         agent.isStopped = true;
@@ -89,6 +93,7 @@ public class EnemyController : MonoBehaviour, Health.IHealthListener
 
     void StartFollow()
     {
+        audio.Play();
         state = State.Follow;
         agent.destination = player.transform.position;
         agent.isStopped = false;
