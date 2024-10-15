@@ -73,3 +73,12 @@ crashlytics-build.properties
 
 # Ignore all asset files in Assets directory
 /[Aa]ssets/
+
+# ShaderLab and HLSL files
+*.shader
+*.cginc
+*.hlsl
+
+# Mathematica files
+*.nb
+*.m
