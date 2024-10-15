@@ -12,9 +12,11 @@ public class Weapon : MonoBehaviour
     public int totalBullet = 32;        // ÀüÃ¼ ÅºÈ¯
     public int maxBulletInMagazine = 8; // ÇÑ ÅºÃ¢´ç Åº¾à ¼ö
     public TMP_Text bulletText;
+    public AudioClip gunShotSound;      
 
     public float damage;
     Animator animator;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -97,6 +99,7 @@ public class Weapon : MonoBehaviour
 
     void RayCastFire()
     {
+        GetComponent<AudioSource>().PlayOneShot(gunShotSound);
         Camera cam = Camera.main;
 
         RaycastHit hit;
